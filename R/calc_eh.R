@@ -12,9 +12,9 @@
 
 calc_eh <- function (genotypes) {
   apply(genotypes, 1, function (snp) {
-    n <- 2
-    p <- sum(snp == 0) / sum(snp == 0 | 2)
-    q <- sum(snp == 2) / sum(snp == 0 | 2)
+    n <- sum(snp == 0 | 2)
+    p <- sum(snp == 0) / n
+    q <- sum(snp == 2) / n
     (n / (n - 1)) * (1 - (p^2 + q^2))
   })
 }
