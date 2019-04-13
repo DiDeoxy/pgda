@@ -6,8 +6,8 @@
 #' @param genotypes a matrix of haploid markers as rows with alleles encoded as
 #' 0 and 2
 #'
-#' @importFrom parallel detectCores mclapply a matrix of haploid markers as rows with alleles encoded as
-#' 0 and 2
+#' @importFrom parallel detectCores mclapply
+#' 
 #' @return a vector of expected heterozygosities of the markers
 #'
 #' @export
