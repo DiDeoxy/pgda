@@ -14,6 +14,7 @@
 
 calc_eh <- function (genotypes) {
   mclapply(genotypes, function (snp) {
+    print(snp)
     n <- sum(snp == 0 | 2)
     p <- sum(snp == 0) / n
     q <- sum(snp == 2) / n
