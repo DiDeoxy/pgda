@@ -13,6 +13,7 @@
 #' @export
 
 calc_eh <- function (genotypes) {
+  print(genotypes)
   mclapply(1:nrow(genotypes), function (row) {
     n <- sum(genotypes[row, ] == 0 | 2)
     p <- sum(genotypes[row, ] == 0) / n
