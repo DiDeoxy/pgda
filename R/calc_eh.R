@@ -6,12 +6,14 @@
 #' @param genotypes a matrix of haploid markers as rows with alleles encoded as
 #' 0 and 2
 #'
+#' @importFrom parallel mclapply
+#'
 #' @return a vector of expected heterozygosities of the markers
 #'
 #' @export
 
 calc_eh <- function (genotypes) {
-  apply(genotypes, 1, function (snp) {
+  mclapply(genotypes, 1, function (snp) {
     n <- sum(snp == 0 | 2)
     p <- sum(snp == 0) / n
     q <- sum(snp == 2) / n
