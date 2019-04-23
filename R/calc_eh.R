@@ -18,5 +18,5 @@ calc_eh <- function (genotypes) {
     p <- sum(genotypes[row, ] == 0) / n
     q <- sum(genotypes[row, ] == 2) / n
     (n / (n - 1)) * (1 - (p^2 + q^2))
-  }, mc.cores = detectCores())
+  }, mc.cores = detectCores()) %>% unlist()
 }
