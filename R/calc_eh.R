@@ -7,6 +7,7 @@
 #' 0 and 2
 #'
 #' @importFrom parallel detectCores mclapply
+#' @importFrom magrittr %>%
 #' 
 #' @return a vector of expected heterozygosities of the markers
 #'
