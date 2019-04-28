@@ -11,7 +11,7 @@
 #'
 #' @importFrom dplyr tibble
 #' @importFrom GGally ggmatrix
-#' @importFrom ggplot2 aes element_text geom_freqpoly ggplot scale_colour_manual theme xlim ylim
+#' @importFrom ggplot2 aes element_text geom_freqpoly ggplot scale_colour_manual scale_y_log10 theme xlim ylim
 #' @importFrom magrittr %>%
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom stringr str_c
@@ -61,13 +61,15 @@ plot_gaps_nbs_ld <- function(lng, genome_ld, gds, plot_title, y_lim, out_name) {
     geom_freqpoly(aes(gaps, colour = Genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     xlim(min(gaps_log10$gaps), max(gaps_log10$gaps)) +
-    ylim(0, y_lim)
+    ylim(0, y_lim) +
+    scale_y_log_10()
   plots[[2]] <- nbs_ld_genome %>%
     ggplot() +
     geom_freqpoly(aes(ld, colour = Genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     xlim(0, 1.001) +
-    ylim(0, y_lim)
+    ylim(0, y_lim) +
+    scale_y_log_10()
 
   # turn plot list into ggmatrix
   plots_matrix <- ggmatrix(
