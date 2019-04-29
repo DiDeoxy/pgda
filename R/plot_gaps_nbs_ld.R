@@ -21,8 +21,8 @@
 
 plot_gaps_nbs_ld <- function(lng, genome_ld, gds, plot_title, y_lim, out_name) {
   # histograms and boxplots depicting the distribution of gaps on each genome
-  gaps_log10 <- tibble(
-    Genome = factor(
+  gaps <- tibble(
+    genome = factor(
       c(rep("A", length(lng$A$gaps)),
         rep("B", length(lng$B$gaps)),
         rep("D", length(lng$D$gaps)),
@@ -40,7 +40,7 @@ plot_gaps_nbs_ld <- function(lng, genome_ld, gds, plot_title, y_lim, out_name) {
 
   # histograms and boxplots depicting the distribution of gaps on each genome
   nbs_ld_genome <- tibble(
-    Genome = factor(
+    genome = factor(
       c(rep("A", length(genome_ld$A$nbs)),
         rep("B", length(genome_ld$B$nbs)),
         rep("D", length(genome_ld$D$nbs)),
@@ -57,28 +57,27 @@ plot_gaps_nbs_ld <- function(lng, genome_ld, gds, plot_title, y_lim, out_name) {
   )
 
   plots <- list()
-  plots[[1]] <- gaps_log10 %>%
+  plots[[1]] <- gaps %>%
     ggplot() +
-    geom_freqpoly(aes(gaps, colour = Genome), size = 0.3) +
+    geom_freqpoly(aes(gaps, colour = genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
-    # xlim(min(gaps_log10$gaps), max(gaps_log10$gaps)) +
-    scale_x_log10() +
-    scale_y_log10()
+    scale_x_log10(breaks = c(1e-6, 1e-4, 1e-2, 1, 1e2)) +
+    scale_y_log10(limits = c(1, y_lim))
   plots[[2]] <- nbs_ld_genome %>%
     ggplot() +
-    geom_freqpoly(aes(ld, colour = Genome), size = 0.3) +
+    geom_freqpoly(aes(ld, colour = genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
-    xlim(0, 1.001) +
-    scale_y_log10()
+    xlim(0, 1) +
+    scale_y_log10(limits = c(1, y_lim))
 
   # turn plot list into ggmatrix
   plots_matrix <- ggmatrix(
     plots, nrow = 1, ncol = 2, yAxisLabels = "Num Markers",
     xAxisLabels = c(
-      "Log 10 of Mb Gap Distances",
+      "Megabase Gap Distances",
       "Abs. LD Between Neighbouring Markers"
     ),
-    title = plot_title,
+    # title = plot_title,
     legend = c(1, 2)
   )
 
@@ -88,10 +87,12 @@ plot_gaps_nbs_ld <- function(lng, genome_ld, gds, plot_title, y_lim, out_name) {
       map_stats_and_plots, str_c(basename(gds), ".png")
     ),
     family = "Times New Roman", width = 100, height = 62, pointsize = 10,
-    units = "mm", res = 300)
-  print(plots_matrix + 
+    units = "mm", res = 300
+  )
+  print(plots_matrix +
     theme(legend.position = "bottom",
-      text = element_text(
-        size = 8, lineheight = 0.1)))
+      text = element_text(size = 8, lineheight = 0.1)
+    )
+  )
   dev.off()
 }
