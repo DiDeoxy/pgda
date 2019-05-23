@@ -14,10 +14,10 @@
 #' @export
 
 calc_eh <- function (genotypes) {
-  mclapply(1:nrow(genotypes), function (row) {
-    n <- sum(genotypes[row, ] == 0 | 2)
-    p <- sum(genotypes[row, ] == 0) / n
-    q <- sum(genotypes[row, ] == 2) / n
-    (n / (n - 1)) * (1 - (p^2 + q^2))
-  }, mc.cores = detectCores()) %>% unlist()
+  p <- rowSums(wheat_data$geno == 0)
+  q <- rowSums(wheat_data$geno == 2)
+  n <- (p + q)
+  p_f <- p / n
+  q_f <- 1 - p_f
+  (n / (n - 1)) * (1 - (p_f ^ 2 + q_f ^ 2))
 }

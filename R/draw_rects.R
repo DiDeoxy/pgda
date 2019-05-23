@@ -23,8 +23,8 @@ draw_rects <- function(pop_code, colour_subset, label_order, border) {
       lwd = 0.9,
       col = sapply(
         as.numeric(pop_code)[label_order],
-        function(x) {
-          return(colour_subset[x])
+        function(z) {
+          return(colour_subset[z])
         }
       )
     )
