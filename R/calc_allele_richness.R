@@ -21,7 +21,7 @@ allele_richness <- function (pop, coding, num_cores = 1) {
   # the total number of alleles observed at each marker
   n <- ncol(pop)
   # probs contains the probability of not observing allele i at each 
-  # subsampling level for each possible count of allele i
+  # sub-sampling level (n - k) for each possible count of allele i
   #
   # for each subsampling level
   probs <- mclapply(0:(n - 1), function (k) {

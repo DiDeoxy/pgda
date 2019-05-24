@@ -22,3 +22,4 @@ License: MIT
 URL: https://github.com/DiDeoxy/wheat-pgda/
 Encoding: UTF-8
 RoxygenNote: 6.1.1
+ByteCompile: true
