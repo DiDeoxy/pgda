@@ -17,7 +17,7 @@
 #'
 #' @export
 
-allele.richness <- function (pop, coding, num_cores = 1) {
+allele_richness <- function (pop, coding, num_cores = 1) {
   # the total number of alleles observed at each marker
   n <- ncol(pop)
   # probs contains the probability of not observing allele i at each 
