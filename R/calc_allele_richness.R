@@ -13,11 +13,12 @@
 #' @importFrom parallel mclapply
 #' @importFrom scrime rowTables
 #' 
-#' @return a vector of mean allele richness at each sampling level
+#' @return a table of expected allele richness for each marker at each 
+#' subsampling level with markers in columns and sampling levels in rows
 #'
 #' @export
 
-allele_richness <- function (pop, coding, num_cores = 1) {
+allele_richness <- function (pop, coding = 1:2, num_cores = 1) {
   # the total number of alleles observed at each marker
   n <- ncol(pop)
   # probs contains the probability of not observing allele i at each 
@@ -65,6 +66,6 @@ allele_richness <- function (pop, coding, num_cores = 1) {
         prod(probs[markers[[marker, allele]], 1:k])
       }) %>% unlist()) %>% sum()
     # take the mean acoss all markers
-    }) %>% unlist() %>% mean()
-  }, mc.cores = num_cores) %>% unlist()
+    }) %>% unlist()
+  }, mc.cores = num_cores) %>% do.call(rbind, .)
 }
