@@ -14,7 +14,7 @@
 #' @importFrom scrime rowTables
 #' 
 #' @return a table of expected allele richness for each marker at each 
-#' subsampling level with markers in columns and sampling levels in rows
+#' subsampling level with markers in rows and sampling levels in columns
 #'
 #' @export
 
@@ -67,5 +67,5 @@ allele_richness <- function (pop, coding = 1:2, num_cores = 1) {
       }) %>% unlist()) %>% sum()
     # take the mean acoss all markers
     }) %>% unlist()
-  }, mc.cores = num_cores) %>% do.call(rbind, .)
+  }, mc.cores = num_cores) %>% do.call(cbind, .)
 }
