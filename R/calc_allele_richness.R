@@ -23,7 +23,8 @@ allele_richness <- function (pop, allele_coding = 1:2, num_cores = 1) {
   # the total number of alleles observed at each marker
   n <- ncol(pop)
   # probs contains the probability of not observing allele i at each 
-  # sub-sampling level (n - k) for each possible count of allele i
+  # sub-sampling level (n - k) for each possible count of allele i with
+  # allele count in rows and k in columns
   #
   # for each subsampling level
   probs <- mclapply(0:(n - 1), function (k) {
@@ -50,7 +51,7 @@ allele_richness <- function (pop, allele_coding = 1:2, num_cores = 1) {
     }
   }, mc.cores = num_cores) %>% do.call(cbind, .)
   # creates a data frame containg the counts of each allele for each marker
-  markers <- rowTables(pop, allele_coding)
+  marker_allele_counts <- rowTables(pop, allele_coding)
   # we calcuate the mean allele richness across all markers at each subsampling
   # level (n - k) by calculating the product of not observing each allele at
   # each sub-sampling level then taking the sum of these for each marker and 
@@ -60,13 +61,16 @@ allele_richness <- function (pop, allele_coding = 1:2, num_cores = 1) {
   # observing allele i when k is equal to zero
   mclapply(1:n, function (k) {
     # for each marker
-    lapply(1:nrow(markers), function (marker) {
+    lapply(1:nrow(marker_allele_counts), function (marker) {
       # for each allele, calc the product of the probabilities of not observing
-      # it at all sub-sampling levels up to (n - k), then sum the allel products
-      (1 - lapply(1:length(markers[marker, ]), function (allele) {
-        prod(probs[markers[[marker, allele]], 1:k])
+      # it at all sub-sampling levels up to (n - k), subtract from 1 to get the
+      # prob of observing the allele and sum across alleles
+      (1 - lapply(1:length(marker_allele_countss[marker, ]), function (allele) {
+        prod(probs[marker_allele_counts[[marker, allele]], 1:k])
       }) %>% unlist()) %>% sum()
-    # take the mean acoss all markers
+    # turn into a vector of expected allele richness at each sub-sampling level
+    # for the marker
     }) %>% unlist()
+  # return a table with markers in rows and sub-sampling levels in columns
   }, mc.cores = num_cores) %>% do.call(cbind, .)
 }
