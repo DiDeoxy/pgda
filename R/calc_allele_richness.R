@@ -61,7 +61,7 @@ allele_richness <- function (
   #
   # for each marker
   mclapply(1:nrow(marker_allele_count), function (marker) {
-    (1 - lapply(1:length(marker_allele_counts[marker, ]), function (allele) {
+    (1 - lapply(1:length(marker_allele_count[marker, ]), function (allele) {
       # for each allele, calc the probability of not observing the allele at
       # each sub-sampling level
       cumprod(probs[marker_allele_count[[marker, allele]], ])
