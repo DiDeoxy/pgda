@@ -8,7 +8,7 @@
 #' there must be atleast two individuals
 #' @param allele_coding the coding used for indicating the different alleles
 #' @param num_cores the number of cores to use, must be 1 on windows, can use 
-#'  qdetectCores() of the parallel package on linux
+#' detectCores() of the parallel package on linux
 #'
 #' @importFrom magrittr %>%
 #' @importFrom parallel mclapply
@@ -50,7 +50,7 @@ allele_richness <- function (pop, allele_coding = 1:2, num_cores = 1) {
     }
   }, mc.cores = num_cores) %>% do.call(cbind, .)
   # creates a data frame containg the counts of each allele for each marker
-  markers <- rowTables(pop, coding)
+  markers <- rowTables(pop, allele_coding)
   # we calcuate the mean allele richness across all markers at each subsampling
   # level (n - k) by calculating the product of not observing each allele at
   # each sub-sampling level then taking the sum of these for each marker and 
