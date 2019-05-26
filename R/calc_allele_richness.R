@@ -4,10 +4,11 @@
 #' sampling levels. Missing data is not allowed. Based on the formula presented
 #' in https://www.genetics.org/content/157/1/389
 #'
-#' @param pop a data frame with individuals in columns and markers in rows
-#' @param coding the coding used for indicating the different alleles
+#' @param pop a data frame with individuals in columns and markers in rows,
+#' there must be atleast two individuals
+#' @param allele_coding the coding used for indicating the different alleles
 #' @param num_cores the number of cores to use, must be 1 on windows, can use 
-#' detectCores of the parallel package on linux
+#'  qdetectCores() of the parallel package on linux
 #'
 #' @importFrom magrittr %>%
 #' @importFrom parallel mclapply
@@ -18,7 +19,7 @@
 #'
 #' @export
 
-allele_richness <- function (pop, coding = 1:2, num_cores = 1) {
+allele_richness <- function (pop, allele_coding = 1:2, num_cores = 1) {
   # the total number of alleles observed at each marker
   n <- ncol(pop)
   # probs contains the probability of not observing allele i at each 

@@ -4,19 +4,20 @@
 \alias{allele_richness}
 \title{Calculate mean allele richness at all sampling levels}
 \usage{
-allele_richness(pop, coding = 1:2, num_cores = 1)
+allele_richness(pop, allele_coding = 1:2, num_cores = 1)
 }
 \arguments{
-\item{pop}{a data frame with individuals in columns and markers in rows}
+\item{pop}{a data frame with individuals in columns and markers in rows,
+there must be atleast two individuals}
 
-\item{coding}{the coding used for indicating the different alleles}
+\item{allele_coding}{the coding used for indicating the different alleles}
 
 \item{num_cores}{the number of cores to use, must be 1 on windows, can use 
-detectCores of the parallel package on linux}
+qdetectCores() of the parallel package on linux}
 }
 \value{
 a table of expected allele richness for each marker at each 
-subsampling level with markers in columns and sampling levels in rows
+subsampling level with markers in rows and sampling levels in columns
 }
 \description{
 Calculates the mean allele richness across all markers for a sample at all
