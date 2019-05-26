@@ -52,21 +52,6 @@ allele_richness <- function (pop, allele_coding = 1:2, num_cores = 1) {
   }, mc.cores = num_cores) %>% do.call(cbind, .)
   # creates a data frame containg the counts of each allele for each marker
   marker_allele_counts <- rowTables(pop, allele_coding)
-  
-  mclapply(1:n, function (k) {
-    # for each marker
-    lapply(1:nrow(marker_allele_counts), function (marker) {
-      # for each allele, calc the product of the probabilities of not observing
-      # it at all sub-sampling levels up to (n - k), subtract from 1 to get the
-      # prob of observing the allele and sum across alleles
-      (1 - lapply(1:length(marker_allele_countss[marker, ]), function (allele) {
-        prod(probs[marker_allele_counts[[marker, allele]], 1:k])
-      }) %>% unlist()) %>% sum()
-    # turn into a vector of expected allele richness at each sub-sampling level
-    # for the marker
-    }) %>% unlist()
-  
-  }, mc.cores = num_cores) %>% do.call(cbind, .)
   # we calcuate the mean allele richness across all markers at each subsampling
   # level (n - k) by calculating the product of not observing each allele at
   # each sub-sampling level then taking the sum of these for each marker and 
