@@ -31,7 +31,7 @@ calc_plot_map_stats <- function (gds, plot_title, y_lim, out_name) {
   # find the min length of the top percentile of gaps
   top_percentile <- quantile(
     c(lng$A$gaps, lng$B$gaps, lng$D$gaps),
-    prob = 0.99, na.rm = T
+    prob = 0.99, na.rm = TRUE
   )
 
   # find the maf and mr

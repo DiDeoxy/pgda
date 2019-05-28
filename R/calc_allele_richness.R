@@ -1,11 +1,11 @@
 #' Calculate mean allele richness at all sampling levels
 #'
 #' Calculates the mean allele richness across all markers for a sample at all
-#' sampling levels. Missing data is not allowed. Based on the formula presented
-#' in https://www.genetics.org/content/157/1/389
+#' sampling levels. Based on the formula presented in 
+#' https://www.genetics.org/content/157/1/389
 #'
 #' @param pop a data frame with individuals in columns and markers in rows,
-#' there must be atleast two individuals
+#' there must be atleast two individuals, missing data is not allowed
 #' @param allele_coding the coding used for indicating the different alleles
 #' @param num_cores the number of cores to use with mclapply(), must be 1 on
 #' windows, default is detectCores()
@@ -55,7 +55,7 @@ allele_richness <- function (
   # creates a data frame containg the count of each allele for each marker
   marker_allele_count <- rowTables(pop, allele_coding)
   # we calcuate the mean allele richness across all markers at each subsampling
-  # level (n - k) by calculating the product of not observing each allele at
+  # level (k) by calculating the product of not observing each allele at
   # each sub-sampling level then taking the sum of these for each marker and 
   # then taking the mean across all markers
   #
