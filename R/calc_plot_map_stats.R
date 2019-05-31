@@ -23,7 +23,7 @@ calc_plot_map_stats <- function (gds, plot_title, y_lim, out_name) {
 
   # find the most distant snp on each chroms, the number of snps on each,
   # and the sizes of the gaps between snps
-  lng <- calc_lng(wheat_data$snp)
+  lng <- calc_ng(wheat_data)
 
   # plot the ld
   plot_gaps_nbs_ld(lng, genome_ld, gds, plot_title, y_lim, out_name)
@@ -51,7 +51,7 @@ calc_plot_map_stats <- function (gds, plot_title, y_lim, out_name) {
       mean(maf_mr$D$mr),
       mean(c(maf_mr$A$mr, maf_mr$B$mr, maf_mr$D$mr))
     ),
-    "Covered Bases (Gb)" = c(
+    "Length (Gb)" = c(
       sum(lng$A$leng) / 1000,
       sum(lng$B$leng) / 1000,
       sum(lng$D$leng) / 1000,
