@@ -25,7 +25,17 @@ snpgds_parse <- function(gds_file) {
     pos_mb = read.gdsn(index.gdsn(gds, "snp.position")) / 1e6
   )
 
-  max_lengths <- by(snp$pos, snp$chrom, max) %>%
+  chrom_lengths <- c(
+    "1A" = 594102056, "1B" = 689851870, "1D" = 495451186,
+    "2A" = 780798557, "2B" = 801256715, "2D" = 651852609,
+    "3A" = 750843639, "3B" = 830829764, "3D" = 615552423,
+    "4A" = 744588157, "4B" = 673617499, "4D" = 509857067,
+    "5A" = 709773743, "5B" = 713149757, "5D" = 566080677,
+    "6A" = 618079260, "6B" = 720988478, "6D" = 473592718,
+    "7A" = 736706236, "7B" = 750620385, "7D" = 750620385
+  )
+
+  max_lengths <- chrom_length %>%
     (
       function (max_chrom_lengths) {
         c(A = max(max_chrom_lengths[seq(1, 19, 3)]),
@@ -59,7 +69,8 @@ snpgds_parse <- function(gds_file) {
 
   return(
     list(
-      snp = snp, genotypes = genotypes, max_lengths = max_lengths,
+      snp = snp, genotypes = genotypes, chrom_lengths = chrom_lengths, 
+      max_lengths = max_lengths,
       sample = list(id = sample_id, annot = sample_annot)
     )
   )
