@@ -35,7 +35,7 @@ snpgds_parse <- function(gds_file) {
     "7A" = 736706236, "7B" = 750620385, "7D" = 750620385
   )
 
-  max_lengths <- chrom_length %>%
+  max_lengths <- chrom_lengths %>%
     (
       function (max_chrom_lengths) {
         c(A = max(max_chrom_lengths[seq(1, 19, 3)]),
@@ -69,7 +69,7 @@ snpgds_parse <- function(gds_file) {
 
   return(
     list(
-      snp = snp, genotypes = genotypes, chrom_lengths = chrom_lengths, 
+      snp = snp, genotypes = genotypes, chrom_lengths = chrom_lengths,
       max_lengths = max_lengths,
       sample = list(id = sample_id, annot = sample_annot)
     )
