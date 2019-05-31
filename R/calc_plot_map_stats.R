@@ -23,7 +23,7 @@ calc_plot_map_stats <- function (gds, plot_title, y_lim, out_name) {
 
   # find the most distant snp on each chroms, the number of snps on each,
   # and the sizes of the gaps between snps
-  lng <- calc_ng(wheat_data)
+  lng <- calc_lng(wheat_data)
 
   # plot the ld
   plot_gaps_nbs_ld(lng, genome_ld, gds, plot_title, y_lim, out_name)
