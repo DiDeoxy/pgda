@@ -10,7 +10,7 @@
 calc_lng <- function(wheat_data) {
   # number of snps and mean distances between the genome
   lng <- by(wheat_data$snp, wheat_data$snp$chrom,
-    function (chrom) {
+    function (chrom_data) {
       list(
         leng = wheat_data$chrom_lengths[chrom_data$chrom[1]],
         num = length(chrom_data$pos_mb),
