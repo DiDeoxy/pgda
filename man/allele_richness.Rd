@@ -4,16 +4,16 @@
 \alias{allele_richness}
 \title{Calculate mean allele richness at all sampling levels}
 \usage{
-allele_richness(pop, allele_coding = 1:2, num_cores = 1)
+allele_richness(pop, allele_coding = 1:2, num_cores = detectCores())
 }
 \arguments{
 \item{pop}{a data frame with individuals in columns and markers in rows,
-there must be atleast two individuals}
+there must be atleast two individuals, missing data is not allowed}
 
 \item{allele_coding}{the coding used for indicating the different alleles}
 
-\item{num_cores}{the number of cores to use, must be 1 on windows, can use 
-qdetectCores() of the parallel package on linux}
+\item{num_cores}{the number of cores to use with mclapply(), must be 1 on
+windows, default is detectCores()}
 }
 \value{
 a table of expected allele richness for each marker at each 
@@ -21,6 +21,6 @@ subsampling level with markers in rows and sampling levels in columns
 }
 \description{
 Calculates the mean allele richness across all markers for a sample at all
-sampling levels. Missing data is not allowed. Based on the formula presented
-in https://www.genetics.org/content/157/1/389
+sampling levels. Based on the formula presented in 
+https://www.genetics.org/content/157/1/389
 }

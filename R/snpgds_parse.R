@@ -43,8 +43,7 @@ snpgds_parse <- function(gds_file) {
 
   return(
     list(
-      snp = snp, genotypes = genotypes,
-      chrom_lengths = chrom_lengths,
+      snp = snp, genotypes = genotypes, chrom_lengths = chrom_lengths,
       sample = list(id = sample_id, annot = sample_annot)
     )
   )
