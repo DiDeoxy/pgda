@@ -8,7 +8,7 @@
 #' @export
 
 max_lengths <- function (chrom_lengths) {
-  list(
+  c(
     A = max(chrom_lengths[seq(1, 19, 3)]),
     B = max(chrom_lengths[seq(2, 20, 3)]),
     D = max(chrom_lengths[seq(3, 21, 3)]),
