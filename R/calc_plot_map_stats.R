@@ -105,7 +105,7 @@ calc_plot_map_stats <- function (gds, plot_title, y_lim, out_name) {
       mean(genome_ld$D$nbs, na.rm = TRUE),
       mean(c(genome_ld$A$nbs, genome_ld$B$nbs, genome_ld$D$nbs), na.rm = TRUE)
     )
-  ) %>% round(., 2)
+  ) 
   write_csv(
     map_stats, file.path(
       map_stats_and_plots, str_c(out_name, ".csv")
