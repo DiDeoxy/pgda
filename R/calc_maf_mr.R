@@ -17,7 +17,11 @@ calc_maf_mr <- function (wheat_data) {
         A <- sum(snp == 0)
         B <- sum(snp == 2)
         missing <- sum(snp == 3)
-        return(tibble(maf = min(c(A, B)) / sum(A, B), mr = missing / sum(A, B, missing)))
+        return(
+          tibble(
+            maf = min(c(A, B)) / sum(A, B), mr = missing / sum(A, B, missing)
+          )
+        )
       }) %>% bind_rows()
     }
   )
