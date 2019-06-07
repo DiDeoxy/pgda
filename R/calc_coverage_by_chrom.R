@@ -16,7 +16,7 @@
 #' @export
 
 coverage_by_chrom <- function (snp_chrom, snp_pos) {
-  half_mean_dist <- span_by_chrom(snp_chrom, snp_pos) %>% sum() / (
+  half_mean_dist <- span_by_chrom(snp_chrom, snp_pos, diff = TRUE) %>% sum() / (
     2 * length(snp_chrom)
   )
 

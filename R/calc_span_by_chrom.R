@@ -18,6 +18,4 @@ span_by_chrom <- function (snp_chrom, snp_pos, diff = FALSE) {
   } else {
     by(snp_pos, snp_chrom, max) %>% as.list() %>% unlist()
   }
-  
 }
-
