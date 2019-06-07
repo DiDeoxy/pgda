@@ -68,8 +68,8 @@ plot_gaps_nbs_ld <- function(lng, genome_ld, gds, plot_title, y_lim, out_name) {
     ggplot() +
     geom_freqpoly(aes(ld, colour = genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
-    xlim(0, 1) +
-    scale_y_log10(limits = c(1, y_lim))
+    xlim(0, 1) 
+    # scale_y_log10(limits = c(1, y_lim))
 
   # turn plot list into ggmatrix
   plots_matrix <- ggmatrix(
