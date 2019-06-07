@@ -16,30 +16,33 @@
 #' @export
 
 calc_plot_map_stats <- function (
-  gds, plot_title, scale, y_lim, breaks, out_name
+  phys_gds, gen_gds, plot_file_name, plot_title, y_lim, out_name
 ) {
-  wheat_data <- snpgds_parse(gds)
+  phys_data <- snpgds_parse(phys_gds)
+  gen_data <- snpgds_parse(gen_gds)
 
-  # calc ld stats
-  genome_ld <- calc_ld_stats(gds, wheat_data$snp)
-
-  # find the most distant snp on each chroms, the number of snps on each,
-  # and the sizes of the gaps between snps
-  lng <- calc_lng(wheat_data$snp, scale)
+  # calc stats
+  phys_lng <- calc_lng(phys_data$snp, 1e6)
+  gen_lng <- calc_lng(gen_data$snp, 100)
+  genome_ld <- calc_ld_stats(phys_gds, wheat_data$snp)
 
   # plot the ld
   plot_gaps_nbs_ld(
-    lng, genome_ld, gds, plot_title, scale, y_lim, breaks, out_name
-  )
-
-  # find the min length of the top percentile of gaps
-  top_percentile <- quantile(
-    c(lng$A$gaps, lng$B$gaps, lng$D$gaps),
-    prob = 0.99, na.rm = TRUE
+    phys_lng, gen_lng, genome_ld, plot_file_name, plot_title, y_lim
   )
 
   # find the maf and mr
-  maf_mr <- calc_maf_mr(wheat_data)
+  maf_mr <- calc_maf_mr(phys_data)
+
+  # find the min length of the top percentile of gaps
+  phys_tp <- quantile(
+    c(phys_lng$A$gaps, phys_lng$B$gaps, phys_lng$D$gaps),
+    prob = 0.99, na.rm = TRUE
+  )
+  gen_tp <- quantile(
+    c(gen_lng$A$gaps, gen_lng$B$gaps, gen_lng$D$gaps),
+    prob = 0.99, na.rm = TRUE
+  )
 
   map_stats <- tibble(
     "Genome" = c("A", "B", "D", "All"),
@@ -55,11 +58,17 @@ calc_plot_map_stats <- function (
       mean(maf_mr$D$mr),
       mean(c(maf_mr$A$mr, maf_mr$B$mr, maf_mr$D$mr))
     ),
-    "Coverage (Gb)" = c(
-      sum(lng$A$leng) / 1000,
-      sum(lng$B$leng) / 1000,
-      sum(lng$D$leng) / 1000,
-      sum(lng$A$leng, lng$B$leng, lng$D$leng) / 1000
+    "Span (Gb)" = c(
+      sum(phys_lng$A$leng) / 1000,
+      sum(phys_lng$B$leng) / 1000,
+      sum(phys_lng$D$leng) / 1000,
+      sum(phys_lng$A$leng, phys_lng$B$leng, phys_lng$D$leng) / 1000
+    ),
+    "Span (cM)" = c(
+      sum(gen_lng$A$leng),
+      sum(gen_lng$B$leng),
+      sum(gen_lng$D$leng),
+      sum(gen_lng$A$leng, gen_lng$B$leng, gen_lng$D$leng)
     ),
     "Num. SNPs" = c(
       sum(lng$A$num),
@@ -68,34 +77,64 @@ calc_plot_map_stats <- function (
       sum(lng$A$num, lng$B$num, lng$D$num)
     ),
     "Mean Gap Size (Mb)" = c(
-      mean(lng$A$gaps),
-      mean(lng$B$gaps),
-      mean(lng$D$gaps),
-      mean(c(lng$A$gaps, lng$B$gaps, lng$D$gaps))
+      mean(phys_lng$A$gaps),
+      mean(phys_lng$B$gaps),
+      mean(phys_lng$D$gaps),
+      mean(c(phys_lng$A$gaps, phys_lng$B$gaps, phys_lng$D$gaps))
     ),
-    "Num. Top 1% Gaps" = c(
-      sum(lng$A$gaps >= top_percentile),
-      sum(lng$B$gaps >= top_percentile),
-      sum(lng$D$gaps >= top_percentile),
+    "Mean Gap Size (cM)" = c(
+      mean(gen_lng$A$gaps),
+      mean(gen_lng$B$gaps),
+      mean(gen_lng$D$gaps),
+      mean(c(gen_lng$A$gaps, gen_lng$B$gaps, gen_lng$D$gaps))
+    ),
+    "Num. Top 1% Gaps (Pseudo-chrom.)" = c(
+      sum(phys_lng$A$gaps >= phys_tp),
+      sum(phys_lng$B$gaps >= phys_tp),
+      sum(phys_lng$D$gaps >= phys_tp),
       sum(
         c(
-          lng$A$gaps >= top_percentile,
-          lng$B$gaps >= top_percentile,
-          lng$D$gaps >= top_percentile
+          phys_lng$A$gaps >= phys_tp,
+          phys_lng$B$gaps >= phys_tp,
+          phys_lng$D$gaps >= phys_tp
+        )
+      )
+    ),
+    "Num. Top 1% Gaps (Genetic)" = c(
+      sum(gen_lng$A$gaps >= gen_tp),
+      sum(gen_lng$B$gaps >= gen_tp),
+      sum(gen_lng$D$gaps >= gen_tp),
+      sum(
+        c(
+          gen_lng$A$gaps >= gen_tp,
+          gen_lng$B$gaps >= gen_tp,
+          gen_lng$D$gaps >= gen_tp
         )
       )
     ),
     "Min Length Top 1% Gap (Mb)" = c(
-      min(lng$A$gaps[which(lng$A$gaps >= top_percentile)]),
-      min(lng$B$gaps[which(lng$B$gaps >= top_percentile)]),
-      min(lng$D$gaps[which(lng$D$gaps >= top_percentile)]),
-      top_percentile
+      min(phys_lng$A$gaps[which(phys_lng$A$gaps >= phys_tp)]),
+      min(phys_lng$B$gaps[which(phys_lng$B$gaps >= phys_tp)]),
+      min(phys_lng$D$gaps[which(phys_lng$D$gaps >= phys_tp)]),
+      phys_tp
+    ),
+    "Min Length Top 1% Gap (cM)" = c(
+      min(gen_lng$A$gaps[which(gen_lng$A$gaps >= gen_tp)]),
+      min(gen_lng$B$gaps[which(gen_lng$B$gaps >= gen_tp)]),
+      min(gen_lng$D$gaps[which(gen_lng$D$gaps >= gen_tp)]),
+      gen_tp
     ),
     "Max Length Gap (Mb)" = c(
-      max(lng$A$gaps),
-      max(lng$B$gaps),
-      max(lng$D$gaps),
-      max(c(lng$A$gaps, lng$B$gaps, lng$D$gaps))
+      max(phys_lng$A$gaps),
+      max(phys_lng$B$gaps),
+      max(phys_lng$D$gaps),
+      max(c(phys_lng$A$gaps, phys_lng$B$gaps, phys_lng$D$gaps))
+    ),
+    "Max Length Gap (cM)" = c(
+      max(gen_lng$A$gaps),
+      max(gen_lng$B$gaps),
+      max(gen_lng$D$gaps),
+      max(c(gen_lng$A$gaps, gen_lng$B$gaps, gen_lng$D$gaps))
     ),
     "Mean Pairwise LD" = c(
       mean(genome_ld$A$pw, na.rm = TRUE),

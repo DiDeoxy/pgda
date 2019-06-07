@@ -2,12 +2,12 @@
 #'
 #' Outputs a figure of gap distances and neighbouring ld by genome and overall
 #'
-#' @param lng data supplied by the calc_lng function
+#' @param phys_lng data supplied by the calc_lng function for phys map
+#' @param gen_lng data supplied by the calc_lng function for gen map
 #' @param genome_ld data supplied by the calc_cld_stats function
-#' @param gds the gds object
+#' @param plot_file_name the name for the output file
 #' @param plot_title the title of the plot
 #' @param y_lim the y-axis limit of the plot
-#' @param out_name the name for the output file
 #'
 #' @importFrom dplyr tibble
 #' @importFrom GGally ggmatrix
@@ -20,35 +20,29 @@
 #' @return None
 
 plot_gaps_nbs_ld <- function(
-  lng, genome_ld, gds, plot_title, scale, y_lim, breaks, out_name
+  phys_lng, gen_lng, genome_ld, plot_file_name, plot_title, y_lim
 ) {
   # histograms and boxplots depicting the distribution of gaps on each genome
-  gaps <- tibble(
+  gaps_ld <- tibble(
     genome = factor(
-      c(rep("A", length(lng$A$gaps)),
-        rep("B", length(lng$B$gaps)),
-        rep("D", length(lng$D$gaps)),
-        rep("All", length(c(lng$A$gaps, lng$B$gaps, lng$D$gaps)))
+      c(rep("A", length(phys_lng$A$gaps)),
+        rep("B", length(phys_lng$B$gaps)),
+        rep("D", length(phys_lng$D$gaps)),
+        rep("All", length(c(phys_lng$A$gaps, phys_lng$B$gaps, phys_lng$D$gaps)))
       ),
       levels = c("A", "B", "D", "All")
     ),
-    gaps = c(
-      lng$A$gaps,
-      lng$B$gaps,
-      lng$D$gaps,
-      lng$A$gaps, lng$B$gaps, lng$D$gaps
-    )
-  )
-
-  # histograms and boxplots depicting the distribution of gaps on each genome
-  nbs_ld_genome <- tibble(
-    genome = factor(
-      c(rep("A", length(genome_ld$A$nbs)),
-        rep("B", length(genome_ld$B$nbs)),
-        rep("D", length(genome_ld$D$nbs)),
-        rep("All", length(c(genome_ld$A$nbs, genome_ld$B$nbs, genome_ld$D$nbs)))
-      ),
-      levels = c("A", "B", "D", "All")
+    phys_gaps = c(
+      phys_lng$A$gaps,
+      phys_lng$B$gaps,
+      phys_lng$D$gaps,
+      phys_lng$A$gaps, phys_lng$B$gaps, phys_lng$D$gaps
+    ),
+    gen_gaps = c(
+      gen_lng$A$gaps,
+      gen_lng$B$gaps,
+      gen_lng$D$gaps,
+      gen_lng$A$gaps, gen_lng$B$gaps, gen_lng$D$gaps
     ),
     ld = c(
       genome_ld$A$nbs,
@@ -57,17 +51,25 @@ plot_gaps_nbs_ld <- function(
       genome_ld$A$nbs, genome_ld$B$nbs, genome_ld$D$nbs
     )
   )
-  log_gaps <- cbind(gaps$gaps, log10(gaps$gaps))
-  print(log_gaps[is.infinite(log10(gaps$gaps)), ])
+
+  # log_gaps <- cbind(gaps$gaps, log10(gaps$gaps))
+  # print(log_gaps[is.infinite(log10(gaps$gaps)), ])
   plots <- list()
-  plots[[1]] <- gaps %>%
+  plots[[1]] <- gaps_ld %>%
     ggplot() +
-    geom_freqpoly(aes(gaps * scale, colour = genome), size = 0.3) +
+    geom_freqpoly(aes(phys_gaps * 1e6, colour = genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     # causes some values to be removed
-    scale_x_log10(breaks = breaks, limits = c(min(breaks), max(breaks))) +
+    scale_x_log10(breaks = c(1, 1e2, 1e4, 1e6, 1e8), limits = c(1, 1e6)) +
     scale_y_log10(limits = c(1, y_lim))
-  plots[[2]] <- nbs_ld_genome %>%
+  plots[[2]] <- gaps_ld %>%
+    ggplot() +
+    geom_freqpoly(aes(gen_gaps, colour = genome), size = 0.3) +
+    scale_colour_manual(values = brewer.pal(4, "Dark2")) +
+    # causes some values to be removed
+    scale_x_log10(breaks = c(1, 1e1, 1e2, 1e3, 1e4, 1e5), limits = c(1, 1e5)) +
+    scale_y_log10(limits = c(1, y_lim))
+  plots[[3]] <- gaps_ld %>%
     ggplot() +
     geom_freqpoly(aes(ld, colour = genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
@@ -77,9 +79,10 @@ plot_gaps_nbs_ld <- function(
 
   # turn plot list into ggmatrix
   plots_matrix <- ggmatrix(
-    plots, nrow = 1, ncol = 2, yAxisLabels = "Num Markers",
+    plots, nrow = 1, ncol = 3, yAxisLabels = "Num Markers",
     xAxisLabels = c(
       "Gap Distances in Base Pairs",
+      "Gap Distance in cM",
       "Abs. LD Between Neighbouring Markers"
     ),
     # title = plot_title,
@@ -89,7 +92,7 @@ plot_gaps_nbs_ld <- function(
   # plot the matrix
   png(
     file.path(
-      map_stats_and_plots, str_c(basename(gds), ".png")
+      map_stats_and_plots, plot_file_name, ".png")
     ),
     family = "Times New Roman", width = 100, height = 62, pointsize = 10,
     units = "mm", res = 300
