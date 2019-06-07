@@ -4,12 +4,12 @@
 \alias{span_by_chrom}
 \title{Calculate the difference between the max and min positions on a chromosome}
 \usage{
-span_by_chrom(snp_pos, snp_chrom)
+span_by_chrom(snp_chrom, snp_pos)
 }
 \arguments{
-\item{snp_pos}{a vector with the position of each snp on its chrom}
-
 \item{snp_chrom}{a factor vector inidicating the chrom of each marker}
+
+\item{snp_pos}{a vector with the position of each snp on its chrom}
 }
 \value{
 a vector of span distances
