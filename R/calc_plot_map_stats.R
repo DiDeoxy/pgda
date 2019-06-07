@@ -29,7 +29,7 @@ calc_plot_map_stats <- function (
 
   # plot the ld
   plot_gaps_nbs_ld(
-    lng, genome_ld, gds, plot_title, sclae, y_lim, breaks, out_name
+    lng, genome_ld, gds, plot_title, scale, y_lim, breaks, out_name
   )
 
   # find the min length of the top percentile of gaps
