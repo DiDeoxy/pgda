@@ -55,7 +55,7 @@ plot_gaps_nbs_ld <- function(lng, genome_ld, gds, plot_title, y_lim, out_name) {
       genome_ld$A$nbs, genome_ld$B$nbs, genome_ld$D$nbs
     )
   )
-  print(gaps$gaps)
+  print(cbind(gaps$gaps, log10(gaps$gaps)))
   plots <- list()
   plots[[1]] <- gaps %>%
     ggplot() +
