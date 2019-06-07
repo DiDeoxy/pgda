@@ -67,7 +67,7 @@ plot_gaps_nbs_ld <- function(
     geom_freqpoly(aes(gen_gaps, colour = genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     # causes some values to be removed
-    scale_x_log10(breaks = c(1, 1e1, 1e2, 1e3, 1e4, 1e5), limits = c(1, 1e5)) +
+    scale_x_log10() +
     scale_y_log10(limits = c(1, y_lim))
   plots[[3]] <- gaps_ld %>%
     ggplot() +
