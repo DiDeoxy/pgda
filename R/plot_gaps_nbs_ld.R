@@ -19,7 +19,9 @@
 #'
 #' @return None
 
-plot_gaps_nbs_ld <- function(lng, genome_ld, gds, plot_title, y_lim, out_name) {
+plot_gaps_nbs_ld <- function(
+  lng, genome_ld, gds, plot_title, scale, y_lim, breaks, out_name
+) {
   # histograms and boxplots depicting the distribution of gaps on each genome
   gaps <- tibble(
     genome = factor(
@@ -56,19 +58,22 @@ plot_gaps_nbs_ld <- function(lng, genome_ld, gds, plot_title, y_lim, out_name) {
     )
   )
   log_gaps <- cbind(gaps$gaps, log10(gaps$gaps))
-  print(log_gaps[is.infinite(rowSums(log_gaps)), ])
+  print(log_gaps[is.infinite(log10(gaps$gaps)), ])
   plots <- list()
   plots[[1]] <- gaps %>%
     ggplot() +
-    geom_freqpoly(aes(gaps * 1e6, colour = genome), size = 0.3) +
+    geom_freqpoly(aes(gaps * scale, colour = genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
-    scale_x_log10(breaks = c(1, 1e2, 1e4, 1e6, 1e8)) +
+    # causes some values to be removed
+    xlim(min(breaks), max(breaks)) +
+    scale_x_log10(breaks = breaks) +
     scale_y_log10(limits = c(1, y_lim))
   plots[[2]] <- nbs_ld_genome %>%
     ggplot() +
     geom_freqpoly(aes(ld, colour = genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
-    # xlim(0, 1) 
+    # causes some values to be removed
+    xlim(0, 1) +
     scale_y_log10(limits = c(1, y_lim))
 
   # turn plot list into ggmatrix

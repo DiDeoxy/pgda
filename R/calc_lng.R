@@ -7,14 +7,14 @@
 #'
 #' @return a list contianing the above data organised by genome
 
-calc_lng <- function(snp_data) {
+calc_lng <- function(snp_data, scale) {
   # number of snps and mean distances between the genome
   lng <- by(snp_data, snp_data$chrom,
     function (chrom_data) {
       list(
-        leng = max(chrom_data$pos / 1e6) - min(chrom_data$pos / 1e6),
-        num = length(chrom_data$pos / 1e6),
-        gaps = diff(chrom_data$pos / 1e6)
+        leng = max(chrom_data$pos / scale) - min(chrom_data$pos / scale),
+        num = length(chrom_data$pos / scale),
+        gaps = diff(chrom_data$pos / scale)
       )
     }
   )

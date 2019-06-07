@@ -15,7 +15,9 @@
 #'
 #' @export
 
-calc_plot_map_stats <- function (gds, plot_title, y_lim, out_name) {
+calc_plot_map_stats <- function (
+  gds, plot_title, scale, y_lim, breaks, out_name
+) {
   wheat_data <- snpgds_parse(gds)
 
   # calc ld stats
@@ -23,10 +25,12 @@ calc_plot_map_stats <- function (gds, plot_title, y_lim, out_name) {
 
   # find the most distant snp on each chroms, the number of snps on each,
   # and the sizes of the gaps between snps
-  lng <- calc_lng(wheat_data$snp)
+  lng <- calc_lng(wheat_data$snp, scale)
 
   # plot the ld
-  plot_gaps_nbs_ld(lng, genome_ld, gds, plot_title, y_lim, out_name)
+  plot_gaps_nbs_ld(
+    lng, genome_ld, gds, plot_title, sclae, y_lim, breaks, out_name
+  )
 
   # find the min length of the top percentile of gaps
   top_percentile <- quantile(
