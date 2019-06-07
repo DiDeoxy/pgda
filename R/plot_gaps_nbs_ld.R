@@ -84,11 +84,11 @@ plot_gaps_nbs_ld <- function(
   plots_matrix <- ggmatrix(
     plots, nrow = 1, ncol = 3, yAxisLabels = "Num Markers",
     xAxisLabels = c(
-      "Gap Distances in Base Pairs",
-      "Gap Distance in cM",
-      "Abs. LD Between Neighbouring Markers"
+      "Neighbour Distance in bp",
+      "Neighbour Distance in cM",
+      "Neighbour Abs. Comp. LD"
     ),
-    # title = plot_title,
+    title = plot_title,
     legend = c(1, 2)
   )
 
