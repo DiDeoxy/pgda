@@ -97,7 +97,7 @@ plot_gaps_nbs_ld <- function(
     file.path(
       map_stats_and_plots, str_c(out_name, ".png")
     ),
-    family = "Times New Roman", width = 100, height = 62, pointsize = 10,
+    family = "Times New Roman", width = 165, height = 100, pointsize = 10,
     units = "mm", res = 300
   )
   print(plots_matrix +
