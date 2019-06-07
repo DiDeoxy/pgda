@@ -16,9 +16,9 @@
 #' @export
 
 coverage_by_chrom <- function (snp_chrom, snp_pos) {
-  half_mean_dist <- (
-    by(snp_pos, snp_chrom, max) %>% as.list() %>% unlist() %>% sum()
-  ) / (2 * length(snp_chrom))
+  half_mean_dist <- span_by_chrom(snp_chrom, snp_pos) %>% sum() / (
+    2 * length(snp_chrom)
+  )
 
   by(snp_pos, snp_chrom, function (chrom_pos) {
     intervals <- tibble(start = double(), end = double())

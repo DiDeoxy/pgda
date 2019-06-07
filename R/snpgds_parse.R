@@ -24,10 +24,6 @@ snpgds_parse <- function(gds_file) {
     pos = read.gdsn(index.gdsn(gds, "snp.position"))
   )
 
-  chrom_lengths <- by(snp$pos, snp$chrom, function(pos) {
-    max(pos) - min(pos)
-  })
-
   # convert chroms values from integer to names
   chroms <- outer(as.character(1:7), c("A", "B", "D"), paste, sep = "") %>% 
     t() %>% as.vector()
@@ -45,7 +41,7 @@ snpgds_parse <- function(gds_file) {
 
   return(
     list(
-      snp = snp, genotypes = genotypes, chrom_lengths = chrom_lengths,
+      snp = snp, genotypes = genotypes,
       sample = list(id = sample_id, annot = sample_annot)
     )
   )

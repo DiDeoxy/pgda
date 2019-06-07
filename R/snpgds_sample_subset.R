@@ -29,6 +29,6 @@ snpgds_sample_subset <- function(wheat_data, gds_file, sample_index) {
     snp.chromosome = as.integer(as.factor(wheat_data$snp$chrom)),
     snp.position = wheat_data$snp$pos,
     other.vars = list(samp_annot = wheat_data$sample$annot),
-    snpfirstdim = T
+    snpfirstdim = TRUE
   )
 }
