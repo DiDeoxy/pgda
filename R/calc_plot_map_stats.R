@@ -72,10 +72,10 @@ calc_plot_map_stats <- function (
       sum(gen_lng$A$leng, gen_lng$B$leng, gen_lng$D$leng)
     ),
     "Num. SNPs" = c(
-      sum(lng$A$num),
-      sum(lng$B$num),
-      sum(lng$D$num),
-      sum(lng$A$num, lng$B$num, lng$D$num)
+      sum(phys_lng$A$num),
+      sum(phys_lng$B$num),
+      sum(phys_lng$D$num),
+      sum(phys_lng$A$num, phys_lng$B$num, phys_lng$D$num)
     ),
     "Mean Gap Size (Mb)" = c(
       mean(phys_lng$A$gaps),
