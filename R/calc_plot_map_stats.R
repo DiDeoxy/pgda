@@ -32,6 +32,10 @@ calc_plot_map_stats <- function (
     phys_lng, gen_lng, genome_ld, out_name, plot_title, y_lim
   )
 
+  # calc chrom coverage
+  phys_cov <- coverage_by_chrom(phys_data$snp$chrom, phys_data$snp$pos) / 1e6
+  gen_cov <- coverage_by_chrom(phys_data$snp$chrom, phys_data$snp$pos) / 100
+
   # find the maf and mr
   maf_mr <- calc_maf_mr(phys_data)
 
@@ -65,11 +69,24 @@ calc_plot_map_stats <- function (
       sum(phys_lng$D$leng) / 1000,
       sum(phys_lng$A$leng, phys_lng$B$leng, phys_lng$D$leng) / 1000
     ),
+    "Coverage (Pseudo-chrom.)" = c(
+      phys_cov[seq(1, 19, 3)] %>% sum() / sum(phys_lng$A$leng),
+      phys_cov[seq(2, 20, 3)] %>% sum() / sum(phys_lng$B$leng),
+      phys_cov[seq(3, 21, 3)] %>% sum() / sum(phys_lng$D$leng),
+      phys_cov %>% sum() /
+        sum(phys_lng$A$leng, phys_lng$B$leng, phys_lng$D$leng)
+    ),
     "Span (cM)" = c(
       sum(gen_lng$A$leng),
       sum(gen_lng$B$leng),
       sum(gen_lng$D$leng),
       sum(gen_lng$A$leng, gen_lng$B$leng, gen_lng$D$leng)
+    ),
+    "Coverage (Genetic)" = c(
+      gen_cov[seq(1, 19, 3)] %>% sum() / sum(gen_lng$A$leng),
+      gen_cov[seq(2, 20, 3)] %>% sum() / sum(gen_lng$B$leng),
+      gen_cov[seq(3, 21, 3)] %>% sum() / sum(gen_lng$D$leng),
+      gen_cov %>% sum() / sum(gen_lng$A$leng, gen_lng$B$leng, gen_lng$D$leng)
     ),
     "Num. SNPs" = c(
       sum(phys_lng$A$num),
