@@ -24,7 +24,9 @@ snpgds_parse <- function(gds_file) {
     pos = read.gdsn(index.gdsn(gds, "snp.position"))
   )
 
-  chrom_lengths <- by(snp$pos, snp$chrom, max)
+  chrom_lengths <- by(snp$pos, snp$chrom, function(pos) {
+    max(pos) - min(pos)
+  })
 
   # convert chroms values from integer to names
   chroms <- outer(as.character(1:7), c("A", "B", "D"), paste, sep = "") %>% 

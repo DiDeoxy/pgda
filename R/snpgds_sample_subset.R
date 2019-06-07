@@ -20,7 +20,7 @@ snpgds_sample_subset <- function(wheat_data, gds_file, sample_index) {
       wheat_data$sample$annot[[name]][-sample_index]
     )
   }
-  
+
   snpgdsCreateGeno(
     gds_file,
     genmat = wheat_data$genotypes[, -sample_index],
