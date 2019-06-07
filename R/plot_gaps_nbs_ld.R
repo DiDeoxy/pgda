@@ -61,21 +61,24 @@ plot_gaps_nbs_ld <- function(
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     # causes some values to be removed
     scale_x_log10(breaks = c(1, 1e2, 1e4, 1e6, 1e8), limits = c(NA, 1e8)) +
-    scale_y_log10(limits = c(NA, y_lim))
+    scale_y_log10(limits = c(NA, y_lim)) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
   plots[[2]] <- gaps_ld %>%
     ggplot() +
     geom_freqpoly(aes(gen_gaps, colour = genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     # causes some values to be removed
     scale_x_log10(breaks = c(0.01, 0.1, 1, 10), limits = c(NA, 20)) +
-    scale_y_log10(limits = c(NA, y_lim))
+    scale_y_log10(limits = c(NA, y_lim)) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
   plots[[3]] <- gaps_ld %>%
     ggplot() +
     geom_freqpoly(aes(ld, colour = genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     # causes some values to be removed
     xlim(0, 1) +
-    scale_y_log10(limits = c(1, y_lim))
+    scale_y_log10(limits = c(1, y_lim)) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
   # turn plot list into ggmatrix
   plots_matrix <- ggmatrix(
