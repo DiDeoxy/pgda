@@ -12,7 +12,7 @@ calc_lng <- function(snp_data) {
   lng <- by(snp_data, snp_data$chrom,
     function (chrom_data) {
       list(
-        leng = max(chrom_data$pos / 1e6),
+        leng = max(chrom_data$pos / 1e6) - min(chrom_data$pos / 1e6),
         num = length(chrom_data$pos / 1e6),
         gaps = diff(chrom_data$pos / 1e6)
       )
