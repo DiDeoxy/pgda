@@ -88,7 +88,7 @@ plot_gaps_nbs_ld <- function(
       "Neighbour Distance in cM",
       "Neighbour Abs. Comp. LD"
     ),
-    title = plot_title,
+    # title = plot_title,
     legend = c(1, 2)
   )
 
