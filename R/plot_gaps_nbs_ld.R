@@ -20,7 +20,7 @@
 #' @return None
 
 plot_gaps_nbs_ld <- function(
-  phys_lng, gen_lng, genome_ld, plot_file_name, plot_title, y_lim
+  phys_lng, gen_lng, genome_ld, out_name, plot_title, y_lim
 ) {
   # histograms and boxplots depicting the distribution of gaps on each genome
   gaps_ld <- tibble(
@@ -92,7 +92,7 @@ plot_gaps_nbs_ld <- function(
   # plot the matrix
   png(
     file.path(
-      map_stats_and_plots, plot_file_name, ".png")
+      map_stats_and_plots, str_c(out_name, ".png")
     ),
     family = "Times New Roman", width = 100, height = 62, pointsize = 10,
     units = "mm", res = 300

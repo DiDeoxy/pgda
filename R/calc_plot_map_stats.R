@@ -6,17 +6,18 @@
 #' @importFrom readr write_csv
 #' @importFrom stringr str_c
 #'
-#' @param gds the file path to the gds object
+#' @param phys_gds the file path to the phys gds object
+#' @param gen_gds the file path to the gen gds object
+#' @param out_name the base name to use for the csv
 #' @param plot_title the title of the combined plots
 #' @param y_lim the limit for the y axis of the plots
-#' @param out_name the base name to use for the csv and png outputs
 #'
 #' @return Outputs plots and tables of the data
 #'
 #' @export
 
 calc_plot_map_stats <- function (
-  phys_gds, gen_gds, plot_file_name, plot_title, y_lim, out_name
+  phys_gds, gen_gds, out_name, plot_title, y_lim
 ) {
   phys_data <- snpgds_parse(phys_gds)
   gen_data <- snpgds_parse(gen_gds)
@@ -28,7 +29,7 @@ calc_plot_map_stats <- function (
 
   # plot the ld
   plot_gaps_nbs_ld(
-    phys_lng, gen_lng, genome_ld, plot_file_name, plot_title, y_lim
+    phys_lng, gen_lng, genome_ld, out_name, plot_title, y_lim
   )
 
   # find the maf and mr
