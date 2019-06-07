@@ -17,9 +17,9 @@ calc_ld_stats <- function (gds, snp_data) {
   wheat_gds <- snpgdsOpen(gds)
   # Calcualte ld between all snps on each chromosome
   ld_stats <- by(snp_data, snp_data$chrom, function (chrom) {
-    ld_mat <- snpgdsLDMat(wheat_gds, method = "composite",
-      slide = -1, snp.id = chrom$id)$LD %>%
-      abs() 
+    ld_mat <- snpgdsLDMat(
+      wheat_gds, method = "composite", slide = -1, snp.id = chrom$id
+    )$LD %>% abs()
     return(
       list(
         pw = ld_mat %>% as.dist() %>% as.vector(),
