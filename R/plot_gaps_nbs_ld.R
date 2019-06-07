@@ -55,11 +55,11 @@ plot_gaps_nbs_ld <- function(lng, genome_ld, gds, plot_title, y_lim, out_name) {
       genome_ld$A$nbs, genome_ld$B$nbs, genome_ld$D$nbs
     )
   )
-
+  print(gaps$gaps)
   plots <- list()
   plots[[1]] <- gaps %>%
     ggplot() +
-    geom_freqpoly(aes(1 + gaps * 1e6, colour = genome), size = 0.3) +
+    geom_freqpoly(aes(gaps * 1e6, colour = genome), size = 0.3) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     scale_x_log10(breaks = c(1, 1e2, 1e4, 1e6, 1e8)) +
     scale_y_log10(limits = c(1, y_lim))
