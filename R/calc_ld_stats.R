@@ -14,10 +14,10 @@
 #' chromosome ordered by genome
 
 calc_ld_stats <- function (gds, snp_data) {
-  wheat_internal <- snpgdsOpen(gds)
+  wheat_gds <- snpgdsOpen(gds)
   # Calcualte ld between all snps on each chromosome
   ld_stats <- by(snp_data, snp_data$chrom, function (chrom) {
-    ld_mat <- snpgdsLDMat(wheat_internal, method = "composite",
+    ld_mat <- snpgdsLDMat(wheat_gds, method = "composite",
       slide = -1, snp.id = chrom$id)$LD %>%
       abs() 
     return(
@@ -27,7 +27,7 @@ calc_ld_stats <- function (gds, snp_data) {
       )
     )
   })
-  snpgdsClose(wheat_internal)
+  snpgdsClose(wheat_gds)
 
   genome_ld <- list(A = list(), B = list(), D = list())
   for (i in 1:length(ld_stats)) {

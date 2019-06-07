@@ -25,7 +25,7 @@ calc_plot_map_stats <- function (
   # calc stats
   phys_lng <- calc_lng(phys_data$snp, 1e6)
   gen_lng <- calc_lng(gen_data$snp, 100)
-  genome_ld <- calc_ld_stats(phys_gds, wheat_data$snp)
+  genome_ld <- calc_ld_stats(phys_gds, phys_data$snp)
 
   # plot the ld
   plot_gaps_nbs_ld(
