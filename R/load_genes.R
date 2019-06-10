@@ -22,7 +22,6 @@ load_genes <- function(csv, base = 0) {
       "align_length"
     )
   ) %>%
-    mutate(pos_mb = pos / 1e6) %>%
-    select(id, chrom, pos_mb) %>%
+    select(id, chrom, pos) %>%
     cbind(base = base)
 }
