@@ -74,7 +74,7 @@ plot_gaps_nbs_ld <- function(
     # theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
   plots[[3]] <- gaps_ld %>%
     ggplot() +
-    geom_freqpoly(aes(ld, colour = genome), size = 0.3) +
+    geom_freqpoly(aes(ld, colour = genome), size = 2) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     # causes some values to be removed
     xlim(0, 1) +
