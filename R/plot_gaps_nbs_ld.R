@@ -99,12 +99,12 @@ plot_gaps_nbs_ld <- function(
       map_stats_and_plots, str_c(out_name, ".png")
     ),
     family = "Times New Roman", width = 240, height = 120, pointsize = 10,
-    units = "mm", res = 300
+    units = "mm", res = 192
   )
   print(plots[[3]] +
     theme(
       legend.position = "bottom",
-      # text = element_text(size = 8, lineheight = 0.1)
+      text = element_text(size = 16),
       plot.title = element_text(size = 20),
       axis.title = element_text(size = 20),
       legend.text = element_text(size = 16)
