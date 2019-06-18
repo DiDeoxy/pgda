@@ -106,9 +106,9 @@ plot_gaps_nbs_ld <- function(
       legend.position = "bottom",
       text = element_text(size = 8, lineheight = 0.1)
     ) +
-    xlab("Nieghbouring Marker LD") +
+    xlab("Neighbouring Marker LD") +
     ylab("Num Markers") +
-    labs(title = "Hisograms of Neighbouring Marker LD by Genome")
+    labs(title = "Histograms of Neighbouring Marker LD by Genome")
   )
   # print(plots_matrix +
   #   theme(legend.position = "bottom",
