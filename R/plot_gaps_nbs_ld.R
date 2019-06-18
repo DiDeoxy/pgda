@@ -12,7 +12,7 @@
 #' @importFrom dplyr tibble
 #' @importFrom GGally ggmatrix
 #' @importFrom ggplot2 aes element_text geom_freqpoly ggplot scale_colour_manual
-#' @importFrom ggplot2 scale_x_log10 scale_y_log10 theme xlim ylim
+#' @importFrom ggplot2 scale_x_log10 scale_y_log10 theme xlim ylim xlab ylab
 #' @importFrom magrittr %>%
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom stringr str_c
@@ -90,10 +90,6 @@ plot_gaps_nbs_ld <- function(
     ),
     # title = plot_title,
     legend = c(1, 2)
-  ) +
-    theme(
-    legend.position = "bottom",
-    text = element_text(size = 8, lineheight = 0.1)
   )
 
   # plot the matrix
@@ -104,7 +100,14 @@ plot_gaps_nbs_ld <- function(
     family = "Times New Roman", width = 240, height = 120, pointsize = 10,
     units = "mm", res = 300
   )
-  print(plots[[3]])
+  print(plots[[3]] +
+    theme(
+      legend.position = "bottom",
+      text = element_text(size = 8, lineheight = 0.1)
+    ) +
+    xlab("Naieghbouring Marker LD") +
+    ylab("Num Markers")
+  )
   # print(plots_matrix +
   #   theme(legend.position = "bottom",
   #     text = element_text(size = 8, lineheight = 0.1)
