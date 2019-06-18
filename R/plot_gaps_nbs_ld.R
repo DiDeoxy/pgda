@@ -90,6 +90,10 @@ plot_gaps_nbs_ld <- function(
     ),
     # title = plot_title,
     legend = c(1, 2)
+  ) +
+    theme(
+    legend.position = "bottom",
+    text = element_text(size = 8, lineheight = 0.1)
   )
 
   # plot the matrix
@@ -97,13 +101,14 @@ plot_gaps_nbs_ld <- function(
     file.path(
       map_stats_and_plots, str_c(out_name, ".png")
     ),
-    family = "Times New Roman", width = 165, height = 80, pointsize = 10,
+    family = "Times New Roman", width = 240, height = 120, pointsize = 10,
     units = "mm", res = 300
   )
-  print(plots_matrix +
-    theme(legend.position = "bottom",
-      text = element_text(size = 8, lineheight = 0.1)
-    )
-  )
+  print(plots[[3]])
+  # print(plots_matrix +
+  #   theme(legend.position = "bottom",
+  #     text = element_text(size = 8, lineheight = 0.1)
+  #   )
+  # )
   dev.off()
 }

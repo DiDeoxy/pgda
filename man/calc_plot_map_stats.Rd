@@ -4,16 +4,18 @@
 \alias{calc_plot_map_stats}
 \title{Calculate and plot map stats}
 \usage{
-calc_plot_map_stats(gds, plot_title, y_lim, out_name)
+calc_plot_map_stats(phys_gds, gen_gds, out_name, plot_title, y_lim)
 }
 \arguments{
-\item{gds}{the file path to the gds object}
+\item{phys_gds}{the file path to the phys gds object}
+
+\item{gen_gds}{the file path to the gen gds object}
+
+\item{out_name}{the base name to use for the csv}
 
 \item{plot_title}{the title of the combined plots}
 
 \item{y_lim}{the limit for the y axis of the plots}
-
-\item{out_name}{the base name to use for the csv and png outputs}
 }
 \value{
 Outputs plots and tables of the data

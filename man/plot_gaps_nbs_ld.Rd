@@ -4,20 +4,20 @@
 \alias{plot_gaps_nbs_ld}
 \title{Output figures based on map stats}
 \usage{
-plot_gaps_nbs_ld(lng, genome_ld, gds, plot_title, y_lim, out_name)
+plot_gaps_nbs_ld(phys_lng, gen_lng, genome_ld, out_name, plot_title, y_lim)
 }
 \arguments{
-\item{lng}{data supplied by the calc_lng function}
+\item{phys_lng}{data supplied by the calc_lng function for phys map}
+
+\item{gen_lng}{data supplied by the calc_lng function for gen map}
 
 \item{genome_ld}{data supplied by the calc_cld_stats function}
-
-\item{gds}{the gds object}
 
 \item{plot_title}{the title of the plot}
 
 \item{y_lim}{the y-axis limit of the plot}
 
-\item{out_name}{the name for the output file}
+\item{plot_file_name}{the name for the output file}
 }
 \value{
 None

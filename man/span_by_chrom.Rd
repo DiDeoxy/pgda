@@ -2,9 +2,10 @@
 % Please edit documentation in R/calc_span_by_chrom.R
 \name{span_by_chrom}
 \alias{span_by_chrom}
-\title{Calculate the difference between the max and min positions on a chromosome}
+\title{Calculate the length of each chrom, optionally subtract the min position from
+it}
 \usage{
-span_by_chrom(snp_chrom, snp_pos)
+span_by_chrom(snp_chrom, snp_pos, diff = FALSE)
 }
 \arguments{
 \item{snp_chrom}{a factor vector inidicating the chrom of each marker}
@@ -15,5 +16,6 @@ span_by_chrom(snp_chrom, snp_pos)
 a vector of span distances
 }
 \description{
-Calculate the difference between the max and min positions on a chromosome
+Calculate the length of each chrom, optionally subtract the min position from
+it
 }

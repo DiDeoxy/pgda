@@ -4,7 +4,7 @@
 \alias{calc_lng}
 \title{Calculate LNG}
 \usage{
-calc_lng(snp_data)
+calc_lng(snp_data, scale)
 }
 \arguments{
 \item{snp_data}{the parsed snp data of the gds object}
