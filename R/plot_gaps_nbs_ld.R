@@ -12,7 +12,7 @@
 #' @importFrom dplyr tibble
 #' @importFrom GGally ggmatrix
 #' @importFrom ggplot2 aes element_text geom_freqpoly ggplot scale_colour_manual
-#' @importFrom ggplot2 scale_x_log10 scale_y_log10 theme xlim ylim xlab ylab
+#' @importFrom ggplot2 scale_x_log10 scale_y_log10 theme xlim ylim xlab ylab ggtitle
 #' @importFrom magrittr %>%
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom stringr str_c
@@ -105,8 +105,9 @@ plot_gaps_nbs_ld <- function(
       legend.position = "bottom",
       text = element_text(size = 8, lineheight = 0.1)
     ) +
-    xlab("Naieghbouring Marker LD") +
-    ylab("Num Markers")
+    xlab("Nieghbouring Marker LD") +
+    ylab("Num Markers") +
+    ggtitle("Hisograms of Neighbouring Marker LD by Genome")
   )
   # print(plots_matrix +
   #   theme(legend.position = "bottom",
