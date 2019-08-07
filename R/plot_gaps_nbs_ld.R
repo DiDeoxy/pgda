@@ -70,16 +70,16 @@ plot_gaps_nbs_ld <- function(
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     # causes some values to be removed
     scale_x_log10(breaks = c(0.01, 0.1, 1, 10), limits = c(NA, 30)) +
-    scale_y_log10(limits = c(NA, y_lim))
-    # theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+    scale_y_log10(limits = c(NA, y_lim)) +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
   plots[[3]] <- gaps_ld %>%
     ggplot() +
     geom_freqpoly(aes(ld, colour = genome), size = 2) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     # causes some values to be removed
     xlim(0, 1) +
-    scale_y_log10(limits = c(1, y_lim))
-    # theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+    scale_y_log10(limits = c(1, y_lim)) +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
   # turn plot list into ggmatrix
   plots_matrix <- ggmatrix(
@@ -113,10 +113,10 @@ plot_gaps_nbs_ld <- function(
     ylab("Num Markers") +
     labs(title = "Histograms of Neighbouring Marker LD by Genome")
   )
-  # print(plots_matrix +
-  #   theme(legend.position = "bottom",
-  #     text = element_text(size = 8, lineheight = 0.1)
-  #   )
-  # )
+  print(plots_matrix +
+    theme(legend.position = "bottom",
+      text = element_text(size = 8, lineheight = 0.1)
+    )
+  )
   dev.off()
 }
