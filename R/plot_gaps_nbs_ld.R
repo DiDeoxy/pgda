@@ -58,7 +58,7 @@ plot_gaps_nbs_ld <- function(
   plots <- list()
   plots[[1]] <- gaps_ld %>%
     ggplot() +
-    geom_freqpoly(aes(phys_gaps * 1e6, colour = genome), size = 0.3) +
+    geom_freqpoly(aes(phys_gaps * 1e6, colour = genome), size = 1) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     # causes some values to be removed
     scale_x_log10(breaks = c(1, 1e2, 1e4, 1e6, 1e8), limits = c(NA, 1e8)) +
@@ -66,7 +66,7 @@ plot_gaps_nbs_ld <- function(
     # theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
   plots[[2]] <- gaps_ld %>%
     ggplot() +
-    geom_freqpoly(aes(gen_gaps, colour = genome), size = 0.3) +
+    geom_freqpoly(aes(gen_gaps, colour = genome), size = 1) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     # causes some values to be removed
     scale_x_log10(breaks = c(0.01, 0.1, 1, 10), limits = c(NA, 30)) +
@@ -74,7 +74,7 @@ plot_gaps_nbs_ld <- function(
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
   plots[[3]] <- gaps_ld %>%
     ggplot() +
-    geom_freqpoly(aes(ld, colour = genome), size = 2) +
+    geom_freqpoly(aes(ld, colour = genome), size = 1) +
     scale_colour_manual(values = brewer.pal(4, "Dark2")) +
     # causes some values to be removed
     xlim(0, 1) +
