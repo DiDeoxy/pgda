@@ -5,6 +5,8 @@
 #' @importFrom dplyr tibble
 #' @importFrom readr write_csv
 #' @importFrom stringr str_c
+#' @importFrom tibble rownames_to_column
+#' @importFrom tidyr gather spread
 #'
 #' @param phys_gds the file path to the phys gds object
 #' @param gen_gds the file path to the gen gds object
