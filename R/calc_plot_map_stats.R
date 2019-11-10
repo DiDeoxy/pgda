@@ -166,10 +166,11 @@ calc_plot_map_stats <- function (
       mean(genome_ld$D$nbs, na.rm = TRUE),
       mean(c(genome_ld$A$nbs, genome_ld$B$nbs, genome_ld$D$nbs), na.rm = TRUE)
     )
-  ) %>% round_df(., 2)
-    %>% rownames_to_column
-    %>% gather(var, value, -rowname)
-    %>% spread(rowname, value) 
+  ) %>% 
+    round_df(., 2) %>%
+    rownames_to_column %>%
+    gather(var, value, -rowname) %>%
+    spread(rowname, value) 
 
   write_csv(
     map_stats, file.path(
