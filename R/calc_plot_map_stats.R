@@ -172,7 +172,7 @@ calc_plot_map_stats <- function (
    rownames_to_column(.) %>% 
    gather(var, value, -rowname) %>% 
    spread(rowname, value) %>%
-   rename(Statistic = var, `1` = A, `2` = B, `3` = D, `4` = All)
+   rename(Statistic = var, "A" = `1`, "B" = `2`, "D" = `3`, "All" = `4`)
   write_csv(
     map_stats, file.path(
       map_stats_and_plots, str_c(out_name, ".csv")
