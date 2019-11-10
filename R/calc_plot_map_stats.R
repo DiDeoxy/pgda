@@ -2,7 +2,7 @@
 #'
 #' Calcluates various map statistics creating plots and tables
 #'
-#' @importFrom dplyr tibble
+#' @importFrom dplyr rename tibble
 #' @importFrom readr write_csv
 #' @importFrom stringr str_c
 #' @importFrom tibble rownames_to_column
@@ -171,7 +171,8 @@ calc_plot_map_stats <- function (
   ) %>% round_df(., 2) %>%
    rownames_to_column(.) %>% 
    gather(var, value, -rowname) %>% 
-   spread(rowname, value)
+   spread(rowname, value) %>%
+   rename(Statistic = var, `1` = A, `2` = B, `3` = D, `4` = All)
   write_csv(
     map_stats, file.path(
       map_stats_and_plots, str_c(out_name, ".csv")
